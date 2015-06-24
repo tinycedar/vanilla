@@ -13,23 +13,23 @@ type frame struct {
 	next  *frame
 }
 
-func (self *stack) Push(value *frame) bool {
-	seft.top = &frame{value, self.top}
-	s.size++
+func (self *Stack) Push(value *frame) bool {
+	self.top = &frame{value, self.top}
+	self.size++
 	return true
 }
 
-func (self *stack) Pop() (value interface{}) {
+func (self *Stack) Pop() (value interface{}) {
 	frame := self.top
 	if frame != nil {
 		self.top = frame.next
 		value = frame.value
-		selft.size--
+		self.size--
 		return
 	}
 	return nil
 }
 
-func (seft *stack) Size() int {
+func (self *Stack) Size() int {
 	return self.size
 }
