@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/tinycedar/vanilla/runtime"
 )
 
 func main() {
-	fmt.Println("hello")
+	runtime.Bootstrap()
 }
