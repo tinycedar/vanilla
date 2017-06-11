@@ -1,0 +1,31 @@
+package instructions
+
+import (
+	"fmt"
+	"github.com/tinycedar/class-parser/classfile"
+	"github.com/tinycedar/vanilla/runtime"
+	"strings"
+)
+
+type invokevirtual struct {
+	offset uint16
+	opCode uint8
+}
+
+func (i *invokevirtual) Execute(f *runtime.Frame) {
+	method := f.Method()
+	if cp, ok := method.ConstantPool()[i.offset].(*classfile.ConstantMethodrefInfo); ok {
+		invoked := cp.String(method.ConstantPool())
+		if strings.Index(invoked, "java/io/PrintStream.println") >= 0 {
+			if strings.LastIndex(invoked, "(Ljava/lang/String;)V") >= 0 {
+				fmt.Println(f.OperandStack().PopString())
+			} else if strings.LastIndex(invoked, "(I)V") >= 0 {
+				fmt.Println(f.OperandStack().PopInt())
+			}
+		}
+	}
+}
+
+func (i *invokevirtual) String() string {
+	return fmt.Sprintf("{opcode: 0x%x, invokevirtual}", i.opCode)
+}
