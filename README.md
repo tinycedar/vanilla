@@ -1,2 +1,2 @@
 # vanilla
-A Java Virtual Machine implementation purely written in Go
+An experimental Java Virtual Machine written in Go
