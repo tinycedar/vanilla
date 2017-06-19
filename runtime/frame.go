@@ -11,10 +11,10 @@ type Frame struct {
 	localVars    LocalVars
 	operandStack *OperandStack
 	thread       *Thread
-	method       *classfile.MethodInfo
+	method       *classfile.MemberInfo
 }
 
-func NewFrame(t *Thread, maxLocals, maxStack uint, m *classfile.MethodInfo) *Frame {
+func NewFrame(t *Thread, maxLocals, maxStack uint, m *classfile.MemberInfo) *Frame {
 	return &Frame{nil, newLocalVars(maxLocals),
 		newOperandStack(maxStack), t, m}
 }
@@ -27,7 +27,7 @@ func (f *Frame) OperandStack() *OperandStack {
 	return f.operandStack
 }
 
-func (f *Frame) Method() *classfile.MethodInfo {
+func (f *Frame) Method() *classfile.MemberInfo {
 	return f.method
 }
 

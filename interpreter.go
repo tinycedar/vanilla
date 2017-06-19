@@ -16,7 +16,7 @@ func bootstrap() {
 	interpret(thread, codeAttr.Code)
 }
 
-func getMainMethod() *classfile.MethodInfo {
+func getMainMethod() *classfile.MemberInfo {
 	bytes, err := ioutil.ReadFile("test/Test.class")
 	if err != nil {
 		log.Fatal("Error reading class file")
