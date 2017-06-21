@@ -21,8 +21,7 @@ func getMainMethod() *classfile.MemberInfo {
 	if err != nil {
 		log.Fatal("Error reading class file")
 	}
-	cf := classfile.NewClassFile()
-	cf.Read(classfile.NewClassReader(bytes))
+	cf := classfile.Parse(bytes)
 	for _, m := range cf.Methods() {
 		if m.Name() == "main" && m.Descriptor() == "([Ljava/lang/String;)V" {
 			return &m
