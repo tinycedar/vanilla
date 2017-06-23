@@ -7,6 +7,7 @@ env:
 before_install:
   - ls
 install:
+  - go get -v -u github.com/tinycedar/classp/classfile
   - cd $GOPATH/src/github.com/tinycedar/vanilla
   - go build && ./vanilla
 before_script:
