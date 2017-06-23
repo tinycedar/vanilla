@@ -3,7 +3,7 @@ package runtime
 import (
 	"bytes"
 	"fmt"
-	"github.com/tinycedar/class-parser/classfile"
+	"github.com/tinycedar/classp/classfile"
 )
 
 type Frame struct {

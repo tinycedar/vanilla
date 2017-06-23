@@ -2,7 +2,7 @@ package instructions
 
 import (
 	"fmt"
-	"github.com/tinycedar/class-parser/classfile"
+	"github.com/tinycedar/classp/classfile"
 	"github.com/tinycedar/vanilla/runtime"
 )
 
