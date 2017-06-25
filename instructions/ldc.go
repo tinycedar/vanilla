@@ -17,8 +17,8 @@ func (i *ldc) Execute(f *runtime.Frame) {
 
 func _ldc(frame *runtime.Frame, index uint8) {
 	stack := frame.OperandStack()
-	if cp, ok := frame.Method().ConstantPool()[index].(*classfile.ConstantStringInfo); ok {
-		stack.PushString(cp.String(frame.Method().ConstantPool()))
+	if cp, ok := frame.Method().Cp[index].(*classfile.ConstantStringInfo); ok {
+		stack.PushString(cp.String(frame.Method().Cp))
 	}
 	//TODO
 }

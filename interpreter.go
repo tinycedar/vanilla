@@ -4,52 +4,49 @@ import (
 	"github.com/tinycedar/classp/classfile"
 	"github.com/tinycedar/vanilla/instructions"
 	"github.com/tinycedar/vanilla/runtime"
+	"github.com/tinycedar/vanilla/runtime/heap"
 	"io/ioutil"
 	"log"
 )
 
 func bootstrap() {
 	thread := runtime.NewThread()
-	method := getMainMethod()
-	codeAttr := method.CodeAttribute()
-	thread.Stack().Push(runtime.NewFrame(thread, uint(codeAttr.MaxLocals), uint(codeAttr.MaxStack), method))
-	interpret(thread, codeAttr.Code)
+	thread.Push(runtime.NewFrame(thread, getMainMethod()))
+	interpret(thread)
 }
 
-func getMainMethod() *classfile.MemberInfo {
+func getMainMethod() *heap.Method {
 	bytes, err := ioutil.ReadFile("test/Test.class")
 	if err != nil {
 		log.Fatal("Error reading class file")
 	}
-	cf := classfile.Parse(bytes)
-	for _, m := range cf.Methods() {
-		if m.Name() == "main" && m.Descriptor() == "([Ljava/lang/String;)V" {
-			return &m
+	class := heap.NewClass(classfile.Parse(bytes))
+	for _, m := range class.Methods() {
+		if m.Name == "main" && m.Descriptor == "([Ljava/lang/String;)V" {
+			return m
 		}
 	}
 	return nil
 }
 
-func interpret(t *runtime.Thread, code []byte) {
-	//fmt.Println("code: ", code)
-	frame := t.Stack().Pop()
-	byteCodeReader := instructions.NewByteCodeReader(code)
+func interpret(t *runtime.Thread) {
 	for {
-		pc := t.GetPC()
-		if pc >= len(code) {
-			break
-		}
+		frame := t.CurrentFrame()
+		pc := frame.NextPC()
+		byteCodeReader := instructions.NewByteCodeReader(frame.Method().Code.Code, pc)
 		ins := byteCodeReader.FetchInstruction()
-		//fmt.Printf("pc = %d, ins = %v, frame: %s\n", pc, ins, frame)
+		//fmt.Printf("pc = %d, ins = %v, methodName: %s, frame: %s\n", pc, ins, frame.Method().Name, frame)
 		if ins == nil {
 			//TODO to be removed
 			pc++
-			t.SetPC(pc)
+			frame.SetNextPC(pc)
 			continue
 		}
 		ins.Execute(frame)
-		t.SetPC(byteCodeReader.NextPC())
-
+		frame.SetNextPC(byteCodeReader.NextPC())
+		if t.Stack().Size() <= 0 {
+			break
+		}
 		//fmt.Printf("pc = %d, ins = %v, frame: %s\n", pc, ins, frame)
 	}
 }

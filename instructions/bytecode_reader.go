@@ -2,7 +2,6 @@ package instructions
 
 import (
 	"encoding/binary"
-	//"fmt"
 )
 
 var bigEndian = binary.BigEndian
@@ -12,8 +11,8 @@ type bytecodeReader struct {
 	index    int
 }
 
-func NewByteCodeReader(bytes []byte) *bytecodeReader {
-	return &bytecodeReader{bytes, 0}
+func NewByteCodeReader(bytes []byte, index int) *bytecodeReader {
+	return &bytecodeReader{bytes, index}
 }
 
 func (r *bytecodeReader) FetchInstruction() Instruction {
@@ -37,9 +36,11 @@ func (r *bytecodeReader) FetchInstruction() Instruction {
 	case 0x60:
 		return &iadd{opCode}
 	case 0xb1:
-		//TODO
+		return &_return{opCode}
 	case 0xb6:
 		return &invokevirtual{r.ReadUint16(), opCode}
+	case 0xb8:
+		return &invokestatic{r.ReadUint16(), opCode}
 	default:
 		//fmt.Printf("invalid opcode: %d, %x\n", opCode, opCode)
 	}

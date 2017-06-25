@@ -3,7 +3,7 @@ package runtime
 import (
 	"bytes"
 	"fmt"
-	"github.com/tinycedar/classp/classfile"
+	"github.com/tinycedar/vanilla/runtime/heap"
 )
 
 type Frame struct {
@@ -11,12 +11,14 @@ type Frame struct {
 	localVars    LocalVars
 	operandStack *OperandStack
 	thread       *Thread
-	method       *classfile.MemberInfo
+	method       *heap.Method
+	nextPC       int
 }
 
-func NewFrame(t *Thread, maxLocals, maxStack uint, m *classfile.MemberInfo) *Frame {
-	return &Frame{nil, newLocalVars(maxLocals),
-		newOperandStack(maxStack), t, m}
+func NewFrame(t *Thread, m *heap.Method) *Frame {
+	code := m.Code
+	return &Frame{nil, newLocalVars(uint(code.MaxLocals)),
+		newOperandStack(uint(code.MaxStack)), t, m, 0}
 }
 
 func (f *Frame) LocalVars() LocalVars {
@@ -27,8 +29,20 @@ func (f *Frame) OperandStack() *OperandStack {
 	return f.operandStack
 }
 
-func (f *Frame) Method() *classfile.MemberInfo {
+func (f *Frame) Thread() *Thread {
+	return f.thread
+}
+
+func (f *Frame) Method() *heap.Method {
 	return f.method
+}
+
+func (f *Frame) NextPC() int {
+	return f.nextPC
+}
+
+func (f *Frame) SetNextPC(nextPC int) {
+	f.nextPC = nextPC
 }
 
 func (f *Frame) String() string {

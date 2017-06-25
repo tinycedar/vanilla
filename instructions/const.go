@@ -24,3 +24,7 @@ func (i *iconst_1) String() string {
 func (i *iconst_2) Execute(f *runtime.Frame) {
 	f.OperandStack().PushInt(2)
 }
+
+func (i *iconst_2) String() string {
+	return fmt.Sprintf("{opcode: 0x%x, iconst_2}", i.opCode)
+}

@@ -9,6 +9,18 @@ func NewThread() *Thread {
 	return &Thread{0, newStack()}
 }
 
+func (t *Thread) CurrentFrame() *Frame {
+	return t.stack.top
+}
+
+func (t *Thread) Push(f *Frame) {
+	t.stack.Push(f)
+}
+
+func (t *Thread) Pop() {
+	t.stack.Pop()
+}
+
 func (t *Thread) Stack() *Stack {
 	return t.stack
 }
