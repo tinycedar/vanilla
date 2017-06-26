@@ -2,14 +2,14 @@ package instructions
 
 import (
 	"fmt"
-	"github.com/tinycedar/vanilla/runtime"
+	"github.com/tinycedar/vanilla/runtime/thread"
 )
 
 type iadd struct {
 	opCode uint8
 }
 
-func (i *iadd) Execute(f *runtime.Frame) {
+func (i *iadd) Execute(f *thread.Frame) {
 	stack := f.OperandStack()
 	v2 := stack.PopInt()
 	v1 := stack.PopInt()

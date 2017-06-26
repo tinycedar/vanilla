@@ -1,7 +1,9 @@
 package instructions
 
-import "github.com/tinycedar/vanilla/runtime"
+import (
+	"github.com/tinycedar/vanilla/runtime/thread"
+)
 
 type Instruction interface {
-	Execute(frame *runtime.Frame)
+	Execute(frame *thread.Frame)
 }

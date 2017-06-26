@@ -3,7 +3,7 @@ package instructions
 import (
 	"fmt"
 	"github.com/tinycedar/classp/classfile"
-	"github.com/tinycedar/vanilla/runtime"
+	"github.com/tinycedar/vanilla/runtime/thread"
 	"strings"
 )
 
@@ -12,7 +12,7 @@ type invokevirtual struct {
 	opCode uint8
 }
 
-func (i *invokevirtual) Execute(f *runtime.Frame) {
+func (i *invokevirtual) Execute(f *thread.Frame) {
 	method := f.Method()
 	if cp, ok := method.Cp[i.offset].(*classfile.ConstantMethodrefInfo); ok {
 		invoked := cp.String(method.Cp)

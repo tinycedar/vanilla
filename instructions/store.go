@@ -2,14 +2,14 @@ package instructions
 
 import (
 	"fmt"
-	"github.com/tinycedar/vanilla/runtime"
+	"github.com/tinycedar/vanilla/runtime/thread"
 )
 
 type istore_1 struct {
 	opCode uint8
 }
 
-func (i *istore_1) Execute(f *runtime.Frame) {
+func (i *istore_1) Execute(f *thread.Frame) {
 	val := f.OperandStack().PopInt()
 	f.LocalVars().SetInt(1, val)
 }
@@ -22,7 +22,7 @@ type istore_2 struct {
 	opCode uint8
 }
 
-func (i *istore_2) Execute(f *runtime.Frame) {
+func (i *istore_2) Execute(f *thread.Frame) {
 	val := f.OperandStack().PopInt()
 	f.LocalVars().SetInt(2, val)
 }

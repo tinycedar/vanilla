@@ -1,4 +1,4 @@
-package runtime
+package thread
 
 type Slot struct {
 	num int32

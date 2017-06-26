@@ -1,4 +1,4 @@
-package runtime
+package thread
 
 type Thread struct {
 	pc    int // length of int is platform dependent
@@ -21,14 +21,6 @@ func (t *Thread) Pop() {
 	t.stack.Pop()
 }
 
-func (t *Thread) Stack() *Stack {
-	return t.stack
-}
-
-func (t *Thread) GetPC() int {
-	return t.pc
-}
-
-func (t *Thread) SetPC(pc int) {
-	t.pc = pc
+func (t *Thread) StackNotEmpty() bool {
+	return t.stack.size > 0
 }

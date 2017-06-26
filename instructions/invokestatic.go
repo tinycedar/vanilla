@@ -3,7 +3,7 @@ package instructions
 import (
 	"fmt"
 	"github.com/tinycedar/classp/classfile"
-	"github.com/tinycedar/vanilla/runtime"
+	"github.com/tinycedar/vanilla/runtime/thread"
 )
 
 type invokestatic struct {
@@ -11,9 +11,9 @@ type invokestatic struct {
 	opCode uint8
 }
 
-func (i *invokestatic) Execute(f *runtime.Frame) {
+func (i *invokestatic) Execute(f *thread.Frame) {
 	s := f.Method().Cp.GetConstantInfo(i.index).(*classfile.ConstantMethodrefInfo)
-	f.Thread().Push(runtime.NewFrame(f.Thread(), f.Method().Class.FindMethod(s)))
+	f.Thread().Push(thread.NewFrame(f.Thread(), f.Method().Class.FindMethod(s)))
 	//TODO add method arg related
 }
 
