@@ -31,8 +31,8 @@ func (c *Class) FindMethod(constMethodRef *classfile.ConstantMethodrefInfo) *Met
 	return nil
 }
 
-func FindMainMethod(cf *classfile.ClassFile) *Method {
-	for _, m := range NewClass(cf).Methods() {
+func (c *Class) FindMainMethod() *Method {
+	for _, m := range c.Methods() {
 		if m.Name == "main" && m.Descriptor == "([Ljava/lang/String;)V" {
 			return m
 		}
