@@ -10,6 +10,8 @@ import (
 	"strings"
 )
 
+//TODO singleton & java_home/JDK classpath auto scan
+//TODO need other system class loaders
 type ClassLoader struct {
 	classpath string
 	classMap  map[string]*heap.Class

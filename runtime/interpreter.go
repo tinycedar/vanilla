@@ -3,6 +3,7 @@ package runtime
 import (
 	"github.com/tinycedar/vanilla/instructions"
 	"github.com/tinycedar/vanilla/runtime/thread"
+	"log"
 )
 
 func Interpret(t *thread.Thread) {
@@ -10,10 +11,8 @@ func Interpret(t *thread.Thread) {
 		frame := t.CurrentFrame()
 		reader := instructions.NewByteCodeReader(frame.Method().Code.Code, frame.NextPC())
 		ins := reader.FetchInstruction()
-		//fmt.Printf("pc: %d, %v, { %s }, frame: %s\n", frame.NextPC(), ins, frame.Method().Name, frame)
-		if ins != nil {
-			ins.Execute(frame)
-		}
+		log.Printf("(%s), %d: %v, \n", frame.Method().Name, frame.NextPC(), ins)
+		ins.Execute(frame)
 		frame.SetNextPC(reader.NextPC())
 	}
 }

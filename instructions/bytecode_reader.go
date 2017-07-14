@@ -2,6 +2,7 @@ package instructions
 
 import (
 	"encoding/binary"
+	"fmt"
 )
 
 var bigEndian = binary.BigEndian
@@ -18,6 +19,9 @@ func NewByteCodeReader(bytes []byte, index int) *bytecodeReader {
 func (r *bytecodeReader) FetchInstruction() Instruction {
 	opCode := r.fetchOpCode()
 	//fmt.Printf("opCode: 0x%x\n", opCode)
+	if opCode < 0 || opCode > 255 {
+		panic(fmt.Sprintf("invalid opCode: %d", opCode))
+	}
 	switch opCode {
 	case 0x04:
 		return &iconst_1{opCode}
@@ -42,9 +46,9 @@ func (r *bytecodeReader) FetchInstruction() Instruction {
 	case 0xb8:
 		return &invokestatic{r.ReadUint16(), opCode}
 	default:
-		//fmt.Printf("invalid opcode: %d, %x\n", opCode, opCode)
+		return &notImplemented{opCode}
+		//log.Printf("invalid opcode: %d, %x\n", opCode, opCode)
 	}
-	return nil
 }
 
 func (r *bytecodeReader) NextPC() int {
