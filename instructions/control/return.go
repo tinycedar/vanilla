@@ -26,3 +26,8 @@ func (i *_return) Execute(f *thread.Frame) {
 func (i *_return) String() string {
 	return fmt.Sprintf("{opcode: 0x%x, return}", i.opCode)
 }
+
+// type assertion
+func __return() {
+
+}

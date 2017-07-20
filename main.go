@@ -14,5 +14,5 @@ func main() {
 
 func getMainMethod() *heap.Method {
 	classLoader := runtime.BootstrapClassLoader("./test")
-	return classLoader.LoadClass("Test").FindMainMethod()
+	return classLoader.LoadClass("ComparisonTest").FindMainMethod()
 }

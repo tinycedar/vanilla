@@ -12,9 +12,16 @@ type invokestatic struct {
 }
 
 func (i *invokestatic) Execute(f *thread.Frame) {
-	s := f.Method().Cp.GetConstantInfo(i.index).(*classfile.ConstantMethodrefInfo)
-	f.Thread().Push(thread.NewFrame(f.Thread(), f.Method().Class.FindMethod(s)))
-	//TODO add method arg related
+	method := f.Method()
+	s := method.Cp.GetConstantInfo(i.index).(*classfile.ConstantMethodrefInfo)
+	newFrame := thread.NewFrame(f.Thread(), method.Class.FindMethod(s))
+	if argSlotCount := int(newFrame.Method().ArgSlotCount); argSlotCount > 0 {
+		for i := argSlotCount - 1; i >= 0; i-- {
+			slot := f.OperandStack().PopSlot()
+			newFrame.LocalVars().SetSlot(uint(i), slot)
+		}
+	}
+	f.Thread().Push(newFrame)
 }
 
 func (i *invokestatic) String() string {

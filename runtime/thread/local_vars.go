@@ -13,3 +13,7 @@ func (l LocalVars) SetInt(index uint8, val int32) {
 func (l LocalVars) GetInt(index uint8) int32 {
 	return l[index].num
 }
+
+func (l LocalVars) SetSlot(index uint, slot Slot) {
+	l[index] = slot
+}

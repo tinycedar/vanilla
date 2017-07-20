@@ -14,7 +14,6 @@ import (
 	"github.com/tinycedar/vanilla/instructions/stack"
 	"github.com/tinycedar/vanilla/instructions/stores"
 	"github.com/tinycedar/vanilla/runtime/thread"
-	//"log"
 )
 
 func Interpret(t *thread.Thread) {
