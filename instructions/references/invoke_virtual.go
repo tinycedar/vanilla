@@ -8,8 +8,8 @@ import (
 )
 
 type invokevirtual struct {
-	offset uint16
 	opCode uint8
+	offset uint16
 }
 
 func (i *invokevirtual) Execute(f *thread.Frame) {

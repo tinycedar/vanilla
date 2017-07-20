@@ -32,3 +32,13 @@ func (s *OperandStack) PopString() string {
 	s.size--
 	return fmt.Sprintf("%s", s.slots[s.size].ref.data)
 }
+
+func (s *OperandStack) PushRef(ref *Object) {
+	s.slots[s.size].ref = ref
+	s.size++
+}
+
+func (s *OperandStack) PopRef() *Object {
+	s.size--
+	return s.slots[s.size].ref
+}

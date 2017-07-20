@@ -17,10 +17,8 @@ func NewNotImplemented(opCode uint8) Instruction {
 	return &NotImplemented{opCode}
 }
 
-func (i *NotImplemented) Execute(f *thread.Frame) {
+func (n *NotImplemented) Execute(f *thread.Frame) {}
 
-}
-
-func (i *NotImplemented) String() string {
-	return fmt.Sprintf("{opcode: 0x%x, notImplemented}", i.opCode)
+func (n *NotImplemented) String() string {
+	return fmt.Sprintf("{opcode: 0x%x, notImplemented}", n.opCode)
 }

@@ -11,10 +11,7 @@ type iadd struct {
 
 func (i *iadd) Execute(f *thread.Frame) {
 	stack := f.OperandStack()
-	v2 := stack.PopInt()
-	v1 := stack.PopInt()
-	result := v1 + v2
-	stack.PushInt(result)
+	stack.PushInt(stack.PopInt() + stack.PopInt())
 }
 
 func (i *iadd) String() string {

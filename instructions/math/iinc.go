@@ -11,6 +11,6 @@ type iinc struct {
 }
 
 func (i *iinc) Execute(f *thread.Frame) {
-	val := f.LocalVars().GetInt(int(i.index))
-	f.LocalVars().SetInt(int(i.index), val+int32(i.constant))
+	val := f.LocalVars().GetInt(i.index)
+	f.LocalVars().SetInt(i.index, val+int32(i.constant))
 }

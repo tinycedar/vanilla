@@ -7,8 +7,8 @@ import (
 )
 
 type invokestatic struct {
-	index  uint16
 	opCode uint8
+	index  uint16
 }
 
 func (i *invokestatic) Execute(f *thread.Frame) {
