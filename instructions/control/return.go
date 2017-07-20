@@ -1,9 +1,19 @@
-package instructions
+package control
 
 import (
 	"fmt"
 	"github.com/tinycedar/vanilla/runtime/thread"
 )
+
+type ireturn struct {
+	opCode uint8
+}
+
+func (i *ireturn) Execute(f *thread.Frame) {
+	val := f.OperandStack().PopInt()
+	f.NextFrame().OperandStack().PushInt(val)
+	f.Thread().Pop()
+}
 
 type _return struct {
 	opCode uint8

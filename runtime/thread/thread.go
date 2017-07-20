@@ -1,12 +1,11 @@
 package thread
 
 type Thread struct {
-	pc    int // length of int is platform dependent
 	stack *Stack
 }
 
 func NewThread() *Thread {
-	return &Thread{0, newStack()}
+	return &Thread{newStack()}
 }
 
 func (t *Thread) CurrentFrame() *Frame {

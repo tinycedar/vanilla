@@ -7,7 +7,7 @@ type Method struct {
 	Class      *Class
 	Name       string
 	Descriptor string
-	Code       *classfile.CodeAttribute
+	CodeAttr   *classfile.CodeAttribute
 }
 
 func newMethod(class *Class, m classfile.MemberInfo) *Method {
