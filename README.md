@@ -2,10 +2,10 @@
 An experimental Java Virtual Machine written in Go
 
 ## Build & Run
-`go get github.com/tinycedar/vanilla`
+`go get -u -v github.com/tinycedar/vanilla`
 
 `cd $GOPATH/src/github.com/tinycedar/vanilla`
 
 `go build`
 
-`./vanilla`
+`./vanilla test.MathTest`
