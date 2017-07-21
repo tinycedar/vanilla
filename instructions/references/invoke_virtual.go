@@ -15,7 +15,7 @@ type invokevirtual struct {
 func (i *invokevirtual) Execute(f *thread.Frame) {
 	method := f.Method()
 	if cp, ok := method.Cp[i.offset].(*classfile.ConstantMethodrefInfo); ok {
-		invoked := cp.String(method.Cp)
+		invoked := cp.String()
 		if strings.Index(invoked, "java/io/PrintStream.println") >= 0 {
 			if strings.LastIndex(invoked, "(Ljava/lang/String;)V") >= 0 {
 				fmt.Println(f.OperandStack().PopString())

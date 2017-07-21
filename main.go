@@ -1,18 +1,23 @@
 package main
 
 import (
+	"fmt"
 	"github.com/tinycedar/vanilla/runtime"
 	"github.com/tinycedar/vanilla/runtime/heap"
 	"github.com/tinycedar/vanilla/runtime/thread"
 )
 
 func main() {
-	t := thread.NewThread()
-	t.Push(thread.NewFrame(t, getMainMethod()))
-	runtime.Interpret(t)
-}
+	cmd := parseCmd()
+	if cmd.versionFlag {
+		fmt.Println("Vanilla v0.1")
+	} else if cmd.helpFlag || cmd.class == "" {
+		printUsage()
+	} else {
+		heap.InitClassLoader(cmd.classpath)
 
-func getMainMethod() *heap.Method {
-	classLoader := runtime.BootstrapClassLoader("./test")
-	return classLoader.LoadClass("ComparisonTest").FindMainMethod()
+		thread := thread.NewThread()
+		thread.NewFrame(heap.LoadClass(cmd.class).FindMainMethod())
+		runtime.Interpret(thread)
+	}
 }

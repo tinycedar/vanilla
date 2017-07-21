@@ -1,18 +1,18 @@
 package heap
 
 import (
-	"fmt"
 	"github.com/tinycedar/classp/classfile"
-	"strings"
 )
 
 type Class struct {
-	cf      *classfile.ClassFile
-	methods []*Method
+	classLoader *ClassLoader
+	cf          *classfile.ClassFile
+	methods     []*Method
 }
 
-func NewClass(cf *classfile.ClassFile) *Class {
+func NewClass(cf *classfile.ClassFile, loader *ClassLoader) *Class {
 	class := &Class{}
+	class.classLoader = loader
 	class.cf = cf
 	class.methods = newMethods(class, cf.Methods())
 	return class
@@ -22,9 +22,9 @@ func (c *Class) Methods() []*Method {
 	return c.methods
 }
 
-func (c *Class) FindMethod(constMethodRef *classfile.ConstantMethodrefInfo) *Method {
+func (c *Class) FindMethod(name, descriptor string) *Method {
 	for _, m := range c.methods {
-		if strings.LastIndex(constMethodRef.String(m.Cp), fmt.Sprintf("%s:%s", m.Name, m.Descriptor)) >= 0 {
+		if m.Name == name && m.Descriptor == descriptor {
 			return m
 		}
 	}

@@ -13,7 +13,7 @@ type Frame struct {
 	pc           int
 }
 
-func NewFrame(t *Thread, m *heap.Method) *Frame {
+func newFrame(t *Thread, m *heap.Method) *Frame {
 	code := m.CodeAttr
 	return &Frame{nil, newLocalVars(uint(code.MaxLocals)),
 		newOperandStack(uint(code.MaxStack)), t, m, 0}

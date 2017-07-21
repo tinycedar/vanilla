@@ -1,3 +1,5 @@
+package test;
+
 public class ComparisonTest {
 
     public static void main(String[] args){
