@@ -1,6 +1,7 @@
 package constants
 
 import (
+	"fmt"
 	"github.com/tinycedar/vanilla/instructions"
 	"github.com/tinycedar/vanilla/runtime/thread"
 )
@@ -31,12 +32,31 @@ func FetchInstruction(opCode uint8, reader *instructions.CodeReader) instruction
 		return &iconst_x{opCode, 4}
 	case 0x08:
 		return &iconst_x{opCode, 5}
-		//TODO
+	case 0x09:
+		return &lconst_x{opCode, 0}
+	case 0x0a:
+		return &lconst_x{opCode, 1}
+	case 0x0b:
+		return &fconst_x{opCode, 0.0}
+	case 0x0c:
+		return &fconst_x{opCode, 1.0}
+	case 0x0d:
+		return &fconst_x{opCode, 2.0}
+	case 0x0e:
+		return &dconst_x{opCode, 0.0}
+	case 0x0f:
+		return &dconst_x{opCode, 1.0}
 	case 0x10:
 		return &bipush{opCode, reader.ReadInt8()}
+	case 0x11:
+		return &sipush{opCode, reader.ReadInt16()}
 	case 0x12:
-		return &ldc{opCode, reader.ReadUint8()}
+		return &ldc_x{opCode, uint16(reader.ReadUint8())}
+	case 0x13:
+		fallthrough
+	case 0x14:
+		return &ldc_x{opCode, reader.ReadUint16()}
 	default:
-		return instructions.NewNotImplemented(opCode)
+		panic(fmt.Sprintf("invalid opCode: %d", opCode))
 	}
 }
