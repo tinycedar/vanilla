@@ -1,5 +1,7 @@
 package thread
 
+import "math"
+
 type LocalVars []Slot
 
 func newLocalVars(maxLocals uint) LocalVars {
@@ -26,6 +28,14 @@ func (l LocalVars) GetLong(index uint8) int64 {
 	high := l[index].num
 	low := l[index+1].num
 	return int64(high<<32) | int64(low)
+}
+
+func (l LocalVars) SetFloat(index uint8, val float32) {
+	l[index].num = int32(math.Float32bits(val))
+}
+
+func (l LocalVars) GetFloat(index uint8) float32 {
+	return math.Float32frombits(uint32(l[index].num))
 }
 
 func (l LocalVars) SetSlot(index uint, slot Slot) {

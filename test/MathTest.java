@@ -6,6 +6,7 @@ public class MathTest {
         System.out.println("Hello world !");
         int sum = sum(10);
         System.out.println(sum);
+        System.out.println(addFloat());
     }
 
     public static int sum(int len) {
@@ -14,5 +15,11 @@ public class MathTest {
             sum += i;
         }
         return sum;
+    }
+
+    public static float addFloat() {
+        float a = 1.2f;
+        float b = 2.3f;
+        return a + b;
     }
 }

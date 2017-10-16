@@ -12,8 +12,12 @@ type ldc_x struct {
 }
 
 func (i *ldc_x) Execute(f *thread.Frame) {
-	if cp, ok := f.Method().Cp[i.index].(*classfile.ConstantStringInfo); ok {
+	cpInfo := f.Method().Cp[i.index]
+	if cp, ok := cpInfo.(*classfile.ConstantStringInfo); ok {
 		f.OperandStack().PushString(cp.String(f.Method().Cp))
+	}
+	if cp, ok := cpInfo.(*classfile.ConstantFloatInfo); ok {
+		f.OperandStack().PushFloat(cp.Value())
 	}
 	//TODO
 }

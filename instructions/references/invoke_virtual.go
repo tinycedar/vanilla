@@ -21,6 +21,10 @@ func (i *invokevirtual) Execute(f *thread.Frame) {
 				fmt.Println(f.OperandStack().PopString())
 			} else if strings.LastIndex(invoked, "(I)V") >= 0 {
 				fmt.Println(f.OperandStack().PopInt())
+			} else if strings.LastIndex(invoked, "(F)V") >= 0 {
+				fmt.Println(f.OperandStack().PopFloat())
+			} else {
+				panic("Not implemented return value: " + invoked)
 			}
 		}
 	}
